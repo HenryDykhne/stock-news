@@ -7,7 +7,6 @@ final class StockNews {
     private User user;
     private Display display;
     private Input input;
-    private CSVParser csvParser;
 
     /**
      * controller class for stock news
@@ -16,7 +15,6 @@ final class StockNews {
         user = new User();
         display = new Display();
         input = new Input();
-        csvParser = new CSVParser();
     }
 
     //private void setup(){ }
@@ -35,6 +33,9 @@ final class StockNews {
         return helpText;
     }
 
+    /**
+     * runs the operation loop for the app
+     */
     private void run() {
         display.showUser("StockNews:");
 
