@@ -46,10 +46,15 @@ final class StockNews {
             command = input.getUserInput();
             switch (command) {
                 case "add blacklist":
-                    display.showUser(user.importBlackList());
+                    try {
+                        user.addBlackList(Blacklist.importBlackList());
+                        display.showUser("Success");
+                    } catch (Exception e) {
+                        display.showUser("Error. Check your file.");
+                    }
                     break;
                 case "show blacklists":
-                    display.showUser(user.blackListNamesToString());
+                    display.showUser(user.blacklistListToString());
                     break;
                 case "help":
                     display.showUser(getHelpText());
