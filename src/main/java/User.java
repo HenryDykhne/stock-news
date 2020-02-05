@@ -52,7 +52,8 @@ public class User {
     public String blacklistListToString() {
         StringBuilder text = new StringBuilder();
         for (String key : blacklists.keySet()) {
-           text.append(key).append(": ").append(String.join(", ", blacklists.get(key).getRestrictedText())).append("\n");
+           text.append(key).append(": ").append(String.join(", ",
+                   blacklists.get(key).getRestrictedText())).append("\n");
         }
         return text.toString();
     }
