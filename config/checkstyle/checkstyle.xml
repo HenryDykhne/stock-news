@@ -19,6 +19,7 @@
   Finally, it is worth reading the documentation.
 -->
 
+
 <module name="Checker">
     <!--
         If you set the basedir property below, then all reported file
@@ -83,6 +84,7 @@
         <!--<module name="JavadocVariable"/>-->
         <!--<module name="JavadocStyle"/>-->
         <module name="MissingJavadocMethod"/>
+        <module name="SuppressionCommentFilter"/>
 
         <!-- Checks for Naming Conventions.                  -->
         <!-- See https://checkstyle.org/config_naming.html -->
