@@ -1,5 +1,5 @@
 
-package news.api;
+package news.pojo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,16 +20,16 @@ public class Source {
     @JsonProperty("name")
     private String name;
 
-    /**
-     *
-     * @param name source name
-     * @param id source id
-     */
-    public Source(String id, String name) {
-        super();
-        this.id = id;
-        this.name = name;
-    }
+//    /**
+//     *
+//     * @param name source name
+//     * @param id source id
+//     */
+//    public Source(String id, String name) {
+//        super();
+//        this.id = id;
+//        this.name = name;
+//    }
 
     /**
      * Gets id.

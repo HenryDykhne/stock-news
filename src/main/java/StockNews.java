@@ -1,3 +1,7 @@
+import news.pojo.NewsJSON;
+
+import java.util.ArrayList;
+
 /**
  * This is an app to view stocks and relevant news.
  *
@@ -7,6 +11,7 @@ final class StockNews {
     private User user;
     private Display display;
     private Input input;
+    private NewsApi newsApi;
 
     /**
      * controller class for stock news
@@ -15,6 +20,7 @@ final class StockNews {
         user = new User();
         display = new Display();
         input = new Input();
+        newsApi = new NewsApi();
     }
 
     //private void setup(){ }
@@ -28,6 +34,7 @@ final class StockNews {
         helpText += "Valid Commands:\n";
         helpText += "add blacklist\n";
         helpText += "show blacklists\n";
+        helpText += "check news\n";
         helpText += "help\n";
         helpText += "exit\n";
         return helpText;
@@ -56,6 +63,16 @@ final class StockNews {
                 case "show blacklists":
                     display.showUser(user.blacklistListToString());
                     break;
+                case "check news":
+                    try {
+                        ArrayList<String> testSearchList = new ArrayList<>();
+                        testSearchList.add("apple");
+                        NewsJSON newsJSON = newsApi.mapNewsJSONToPoJo(newsApi.getNewsInfo(testSearchList));
+                        display.showUser("output:" + newsJSON.getArticles().get(0).getTitle());
+
+                    } catch (Exception  e) {
+                        display.showUser("Error: " + e);
+                    }
                 case "help":
                     display.showUser(getHelpText());
                     break;
@@ -66,7 +83,6 @@ final class StockNews {
                     display.showUser("Not a valid command.\n" + getHelpText());
                     break;
             }
-
         }
     }
 

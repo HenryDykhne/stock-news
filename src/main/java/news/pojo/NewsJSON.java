@@ -1,5 +1,5 @@
 
-package news.api;
+package news.pojo;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -26,19 +26,19 @@ public class NewsJSON {
     @JsonProperty("articles")
     private List<Article> articles;
 
-    /**
-     * Instantiates a new News json.
-     *
-     * @param status       the status
-     * @param totalResults the total results
-     * @param articles     the articles
-     */
-    public NewsJSON(String status, Integer totalResults, List<Article> articles) {
-        super();
-        this.status = status;
-        this.totalResults = totalResults;
-        this.articles = articles;
-    }
+//    /**
+//     * Instantiates a new News json.
+//     *
+//     * @param status       the status
+//     * @param totalResults the total results
+//     * @param articles     the articles
+//     */
+//    public NewsJSON(String status, Integer totalResults, List<Article> articles) {
+//        super();
+//        this.status = status;
+//        this.totalResults = totalResults;
+//        this.articles = articles;
+//    }
 
     /**
      * Gets status.

@@ -1,5 +1,5 @@
 
-package news.api;
+package news.pojo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -38,34 +38,34 @@ public class Article {
     @JsonProperty("content")
     private String content;
 
-    /**
-     * Instantiates a new Article.
-     * I know this constructor is massive but this is nescesary to convert the json to a POJO
-     *
-     * @param source      the source
-     * @param author      the author
-     * @param title       the title
-     * @param description the description
-     * @param url         the url
-     * @param urlToImage  the url to the ascociated image
-     * @param publishedAt the published at
-     * @param content     the content
-     */
-    //CHECKSTYLE:OFF
-    public Article(Source source, Object author, String title, String description,
-                   String url, String urlToImage, String publishedAt, String content) {
-     //CHECKSTYLE:ON
-
-        super();
-        this.source = source;
-        this.author = author;
-        this.title = title;
-        this.description = description;
-        this.url = url;
-        this.urlToImage = urlToImage;
-        this.publishedAt = publishedAt;
-        this.content = content;
-    }
+//    /**
+//     * Instantiates a new Article.
+//     * I know this constructor is massive but this is nescesary to convert the json to a POJO
+//     *
+//     * @param source      the source
+//     * @param author      the author
+//     * @param title       the title
+//     * @param description the description
+//     * @param url         the url
+//     * @param urlToImage  the url to the ascociated image
+//     * @param publishedAt the published at
+//     * @param content     the content
+//     */
+//    //CHECKSTYLE:OFF
+//    public Article(Source source, Object author, String title, String description,
+//                   String url, String urlToImage, String publishedAt, String content) {
+//     //CHECKSTYLE:ON
+//
+//        super();
+//        this.source = source;
+//        this.author = author;
+//        this.title = title;
+//        this.description = description;
+//        this.url = url;
+//        this.urlToImage = urlToImage;
+//        this.publishedAt = publishedAt;
+//        this.content = content;
+//    }
 
     /**
      * Gets source.
