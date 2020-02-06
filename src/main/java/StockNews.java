@@ -2,7 +2,9 @@ import news.pojo.Article;
 import news.pojo.NewsJSON;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This is an app to view stocks and relevant news.
@@ -14,6 +16,7 @@ final class StockNews {
     private Display display;
     private Input input;
     private NewsApi newsApi;
+    private Map<String, Stock> stockmap;
 
     /**
      * controller class for stock news
@@ -23,6 +26,7 @@ final class StockNews {
         display = new Display();
         input = new Input();
         newsApi = new NewsApi();
+        stockmap = new HashMap<>();
     }
 
     //private void setup(){ }
