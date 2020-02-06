@@ -7,6 +7,7 @@ import javax.swing.JFileChooser;
 public class Blacklist {
     private String name;
     private String[] restrictedText;
+    private boolean active;
 
     /**
      * Instantiates a new Blacklist.
@@ -17,6 +18,19 @@ public class Blacklist {
     public Blacklist(String name, String[] list) {
         this.name = name;
         this.restrictedText = list;
+        this.active = true;
+    }
+
+    /**
+     * Instantiates a new Blacklist.
+     *
+     * @param name   the name
+     * @param list   the list
+     * @param active the active
+     */
+    public Blacklist(String name, String[] list, Boolean active) {
+        this(name, list);
+        this.active = active;
     }
 
     /**
@@ -49,7 +63,7 @@ public class Blacklist {
     /**
      * Sets restricted text.
      *
-     * @param restrictedText the restricted text
+     * @param restrictedText the restricted textgetUrl()
      */
     public void setRestrictedText(String[] restrictedText) {
         this.restrictedText = restrictedText;
@@ -78,4 +92,21 @@ public class Blacklist {
         }
     }
 
+    /**
+     * Is active boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * Sets active.
+     *
+     * @param active the active
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
