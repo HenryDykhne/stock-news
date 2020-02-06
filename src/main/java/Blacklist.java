@@ -18,7 +18,7 @@ public class Blacklist {
     public Blacklist(String name, String[] list) {
         this.name = name;
         this.restrictedText = list;
-        this.active = false;
+        this.active = true;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Blacklist {
     /**
      * Sets restricted text.
      *
-     * @param restrictedText the restricted text
+     * @param restrictedText the restricted textgetUrl()
      */
     public void setRestrictedText(String[] restrictedText) {
         this.restrictedText = restrictedText;
@@ -92,4 +92,21 @@ public class Blacklist {
         }
     }
 
+    /**
+     * Is active boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * Sets active.
+     *
+     * @param active the active
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }

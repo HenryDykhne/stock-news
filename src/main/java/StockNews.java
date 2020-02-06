@@ -1,6 +1,8 @@
+import news.pojo.Article;
 import news.pojo.NewsJSON;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is an app to view stocks and relevant news.
@@ -68,7 +70,8 @@ final class StockNews {
                         ArrayList<String> testSearchList = new ArrayList<>();
                         testSearchList.add("apple");
                         NewsJSON newsJSON = newsApi.mapNewsJSONToPoJo(newsApi.getNewsInfo(testSearchList));
-                        display.showUser("output:" + newsJSON.getArticles().get(0).getTitle());
+                        List<Article> filteredNews = NewsFilter.filterNews(newsJSON, user.getBlackLists().values());
+                        display.showUser("output:" + filteredNews.get(0).getUrl());
 
                     } catch (Exception  e) {
                         display.showUser("Error: " + e);
