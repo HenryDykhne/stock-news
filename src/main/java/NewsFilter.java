@@ -8,22 +8,12 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-/**
- * The type News filter.
- */
 public final class NewsFilter {
 
     private NewsFilter() {
         //not to be instantiated
     }
 
-    /**
-     * filter news article [ ].
-     *
-     * @param newsJSON   the news json
-     * @param blacklists the blacklists
-     * @return the article [ ]
-     */
     public static List<Article> filterNews(NewsJSON newsJSON, Collection<Blacklist> blacklists) {
         //filtering nonactive blacklists for convenience
         Collection<String> activeMegaList = new HashSet<>();

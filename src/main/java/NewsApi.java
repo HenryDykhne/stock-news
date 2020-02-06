@@ -15,9 +15,6 @@ import org.apache.http.client.utils.URIBuilder;
 
 import java.util.List;
 
-/**
- * The type News api.
- */
 public class NewsApi {
     private static final String API_KEY = "603e0c6a34604b9fb43fa35f6148167c";
     public static final int OK = 200;
@@ -33,14 +30,6 @@ public class NewsApi {
         return builder.build().toURL();
     }
 
-    /**
-     * Gets news info.
-     *
-     * @param searchTerms the search terms
-     * @return the news info
-     * @throws IOException        the io exception
-     * @throws URISyntaxException the uri syntax exception
-     */
     public String getNewsInfo(List<String> searchTerms) throws IOException, URISyntaxException {
         StringBuilder content = new StringBuilder();
 
@@ -65,13 +54,6 @@ public class NewsApi {
         }
     }
 
-    /**
-     * Map news json to po jo news json.
-     *
-     * @param newsJSON the news json
-     * @return the news json
-     * @throws IOException the io exception
-     */
     public NewsJSON mapNewsJSONToPoJo(String newsJSON) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<NewsJSON> typeMap = new TypeReference<>() { };
