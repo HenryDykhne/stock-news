@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'checkstyle'
+    id 'application'
 }
 
 group 'org.example'
@@ -20,4 +21,18 @@ dependencies {
 
 checkstyle {
     toolVersion = "8.26"
+}
+
+apply plugin : "java"
+ext {
+    javaMainClass = "StockNews"
+}
+
+
+
+application {
+    mainClassName = javaMainClass
+}
+run{
+    standardInput = System.in
 }
