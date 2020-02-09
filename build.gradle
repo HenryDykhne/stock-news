@@ -28,9 +28,9 @@ ext {
     javaMainClass = "StockNews"
 }
 
-//application {
-//    mainClassName = javaMainClass
-//}
+application {
+    mainClassName = javaMainClass
+}
 
 run{
     standardInput = System.in
