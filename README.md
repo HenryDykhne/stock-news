@@ -34,13 +34,13 @@ stockCode,searchTerm3,searchTerm4
 #### User Story 1:
 As a Businessman, I want to be able to see my list of available blacklists and their contents so that I may know what filters are active.
 #### Acceptance Criteria 1:
->Scenario:
+>Scenario: The Businessman 
 >
->Given
+>Given I have started the program and added at least one blacklist.
 >
->When
+>When I enter the command `show blacklists`
 >
->Then
+>Then program displays a list of available blacklists
 
 #### User Story 2:
 As a Businessman, I want to be able to add a file of blacklists so that I can have my own custom filters.
