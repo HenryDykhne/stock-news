@@ -1,4 +1,6 @@
-import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Blacklist {
     private String name;
@@ -32,12 +34,17 @@ public class Blacklist {
         this.restrictedText = restrictedText;
     }
 
-    public static Blacklist importBlackList() throws Exception {
+    public static Map<String, Blacklist> importBlacklists() throws Exception {
         DataImporter importer = new CSVImporter();
-        File file = FileChooser.selectFile();
         //add line to list of blacklists
         importer.importData();
-        return new Blacklist(file.getName(), importer.parse().get(0));
+        Map<String, Blacklist> newBlacklists = new HashMap<>();
+        for (String[] row: importer.parse()) {
+            if(row != null && row.length >= 2) {
+                newBlacklists.put(row[0], new Blacklist(row[0], Arrays.copyOfRange(row, 1, row.length)));
+            }
+        }
+        return newBlacklists;
 
     }
 

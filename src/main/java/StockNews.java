@@ -25,10 +25,10 @@ final class StockNews {
     private String getHelpText() {
         String helpText = "";
         helpText += "Valid Commands:\n";
-        helpText += "add blacklist\n";
+        helpText += "add blacklists\n";
         helpText += "show blacklists\n";
         helpText += "check news\n";
-        helpText += "add stock (admin privileges required)\n";
+        helpText += "add stocks (admin privileges required)\n";
         helpText += "help\n";
         helpText += "exit\n";
         return helpText;
@@ -52,7 +52,7 @@ final class StockNews {
         while (!command.equalsIgnoreCase("exit")) {
             command = input.getUserInput();
             switch (command) {
-                case "add blacklist":
+                case "add blacklists":
                     addBlacklist();
                     break;
                 case "show blacklists":
@@ -61,7 +61,7 @@ final class StockNews {
                 case "check news":
                     checkNews();
                     break;
-                case "add stock":
+                case "add stocks":
                     addStock();
                     break;
                 case "help":
@@ -79,7 +79,7 @@ final class StockNews {
 
     private void addBlacklist() {
         try {
-            actor.addBlackList(Blacklist.importBlackList());
+            actor.addBlacklists(Blacklist.importBlacklists());
             display.showUser("Success");
         } catch (Exception e) {
             display.showUser("Error. Check your file.");
@@ -87,12 +87,22 @@ final class StockNews {
     }
 
     private void checkNews() {
+        display.showUser("Please enter the stock you want to view");
+        String name = input.getUserInput();
         try {
-            List<String> searchTermsList = stocks.get(input.getUserInput()).getNewsKeywords();
+            List<String> searchTermsList = stocks.get(name).getNewsKeywords();
             NewsJSON newsJSON = newsApi.mapNewsJSONToPoJo(newsApi.getNewsInfo(searchTermsList));
-            List<Article> filteredNews = NewsFilter.filterNews(newsJSON, actor.getBlackLists().values());
-            display.showUser("output:" + filteredNews.get(0).getUrl());
 
+            //blacklisted articles have a bool value of false
+            Map<Article, Boolean> filteredNews = NewsFilter.filterNews(newsJSON, actor.getBlackLists().values());
+            display.showUser("Filtered Articles:");
+            for(Article article : filteredNews.keySet()){
+                if(filteredNews.get(article)){
+                    display.showUser("(Trustworthy)" + article.getUrl());
+                } else {
+                    display.showUser("(Untrustworthy)" + article.getUrl());
+                }
+            }
         } catch (Exception  e) {
             display.showUser("Error: " + e);
         }

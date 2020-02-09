@@ -1,11 +1,11 @@
 import news.pojo.Article;
 import news.pojo.NewsJSON;
 
-import java.util.Arrays;
+import java.util.Map;
 import java.util.Collection;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
 
 
 public final class NewsFilter {
@@ -14,7 +14,7 @@ public final class NewsFilter {
         //not to be instantiated
     }
 
-    public static List<Article> filterNews(NewsJSON newsJSON, Collection<Blacklist> blacklists) {
+    public static Map<Article, Boolean> filterNews(NewsJSON newsJSON, Collection<Blacklist> blacklists) {
         //filtering nonactive blacklists for convenience
         Collection<String> activeMegaList = new HashSet<>();
         for (Blacklist blacklist : blacklists) {
@@ -23,13 +23,13 @@ public final class NewsFilter {
             }
         }
 
-        //collecting all articles that do NOT contain any restricted words from the active blacklists
-        List<Article> filteredArticles = new ArrayList<>();
+        //marking all articles that
+        Map<Article, Boolean> filteredArticles = new HashMap<>();
         for (Article article : newsJSON.getArticles()) {
-            filteredArticles.add(article);
+            filteredArticles.put(article, true);
             for (String restriction : activeMegaList) {
-                if (article.getUrl().contains(restriction)) {
-                    filteredArticles.remove(article);
+                if (article.getUrl().toLowerCase().contains(restriction.toLowerCase())) {
+                    filteredArticles.replace(article, false);
                 }
             }
         }

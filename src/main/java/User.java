@@ -18,8 +18,8 @@ public class User {
         this.blacklists = blacklists;
     }
 
-    public void addBlackList(Blacklist blacklist) {
-        this.blacklists.put(blacklist.getName(), blacklist);
+    public void addBlacklists(Map<String, Blacklist> blacklists) {
+        this.blacklists.putAll(blacklists);
     }
 
     public String blacklistListToString() {
