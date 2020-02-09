@@ -1,85 +1,69 @@
 import news.pojo.Article;
 import news.pojo.NewsJSON;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * This is an app to view stocks and relevant news.
- *
- * @version 0.1
- */
 final class StockNews {
-    private User user;
+    private User actor;
+    private Admin admin;
     private Display display;
     private Input input;
     private NewsApi newsApi;
-    private Map<String, Stock> stockmap;
+    private Map<String, Stock> stocks;
 
-    /**
-     * controller class for stock news
-     **/
     private StockNews() {
-        user = new User();
+        actor = new User();
         display = new Display();
         input = new Input();
         newsApi = new NewsApi();
-        stockmap = new HashMap<>();
+        stocks = new HashMap<>();
     }
 
-    //private void setup(){ }
-
-    /**
-     *
-     * @return String of viable commands
-     */
     private String getHelpText() {
         String helpText = "";
         helpText += "Valid Commands:\n";
-        helpText += "add blacklist\n";
+        helpText += "add blacklists\n";
         helpText += "show blacklists\n";
         helpText += "check news\n";
+        helpText += "add stocks (admin privileges required)\n";
         helpText += "help\n";
         helpText += "exit\n";
         return helpText;
     }
 
-    /**
-     * runs the operation loop for the app
-     */
-    private void run() {
+    private void setup() {
         display.showUser("StockNews:");
+        display.showUser(("Be admin for demonstration (Gives full permissions)? (y/n):"));
+        //I could not figure out how to correctly structure admin so that I could
+        //store it and user in one variable and user whichever methods when nescesary.
+        if (input.getUserInput().equalsIgnoreCase("y")) {
+            admin = new Admin();
+        }
+    }
 
+    ///this method is only intended to demo the applications capabilities and thus breaks single responsibility.
+    private void run() {
         String command = "";
         display.showUser(getHelpText());
 
         while (!command.equalsIgnoreCase("exit")) {
             command = input.getUserInput();
             switch (command) {
-                case "add blacklist":
-                    try {
-                        user.addBlackList(Blacklist.importBlackList());
-                        display.showUser("Success");
-                    } catch (Exception e) {
-                        display.showUser("Error. Check your file.");
-                    }
+                case "add blacklists":
+                    addBlacklist();
                     break;
                 case "show blacklists":
-                    display.showUser(user.blacklistListToString());
+                    showBlacklists();
                     break;
                 case "check news":
-                    try {
-                        ArrayList<String> testSearchList = new ArrayList<>();
-                        testSearchList.add("apple");
-                        NewsJSON newsJSON = newsApi.mapNewsJSONToPoJo(newsApi.getNewsInfo(testSearchList));
-                        List<Article> filteredNews = NewsFilter.filterNews(newsJSON, user.getBlackLists().values());
-                        display.showUser("output:" + filteredNews.get(0).getUrl());
-
-                    } catch (Exception  e) {
-                        display.showUser("Error: " + e);
-                    }
+                    checkNews();
+                    break;
+                case "add stocks":
+                    addStock();
+                    break;
                 case "help":
                     display.showUser(getHelpText());
                     break;
@@ -93,13 +77,61 @@ final class StockNews {
         }
     }
 
-    /**
-     * Main method.
-     * @param args command line arguments
-     **/
+    private void addBlacklist() {
+        try {
+            actor.addBlacklists(Blacklist.importBlacklists());
+            display.showUser("Success");
+        } catch (Exception e) {
+            display.showUser("Error. Check your file.");
+        }
+    }
+
+    private void checkNews() {
+        display.showUser("Please enter the stock you want to view");
+        String name = input.getUserInput();
+        try {
+            if (stocks.get(name) == null) {
+                throw new Exception();
+            }
+            List<String> searchTermsList = stocks.get(name).getNewsKeywords();
+            NewsJSON newsJSON = newsApi.mapNewsJSONToPoJo(newsApi.getNewsInfo(searchTermsList));
+
+            //blacklisted articles have a bool value of false
+            Map<Article, Boolean> filteredNews = NewsFilter.filterNews(newsJSON, actor.getBlackLists().values());
+            display.showUser("Filtered Articles:");
+            for (Article article : filteredNews.keySet()) {
+                if (filteredNews.get(article)) {
+                    display.showUser("(Trustworthy)" + article.getUrl());
+                } else {
+                    display.showUser("(Untrustworthy)" + article.getUrl());
+                }
+            }
+        } catch (Exception  e) {
+            display.showUser("Error: " + e);
+        }
+    }
+
+    private void showBlacklists() {
+        display.showUser(actor.blacklistListToString());
+    }
+
+    private void addStock() {
+        if (admin != null) {
+            try {
+                admin.addStocksFromFile(stocks);
+                display.showUser("Stocks added.");
+            } catch (IOException e) {
+                e.printStackTrace();
+                display.showUser("Something went wrong. We could not add your stocks.");
+            }
+        } else {
+            display.showUser("Not enough permissions.");
+        }
+    }
+
     public static void main(String[] args) {
         StockNews app = new StockNews();
-        //app.setup();
+        app.setup();
         app.run();
     }
 
