@@ -70,10 +70,10 @@ As a Businessman, I want to be able to see my list of available blacklists and t
 >When I enter the command `show blacklists`,
 >
 >Then program displays a list of available blacklists
+>
 #### Analysis:
 * The implementation of show blacklists resides in the `User` class under the method `blacklistsToString`.
 * Single responsibility: It does only one thing. It constructs and returns a string of the available blacklists.
-* Open closed: 
 
 ### User Story 3:
 #### Story 3:
@@ -92,10 +92,12 @@ As the Administrator, I want to be able to add stocks (with search terms) that c
 >When the user selects that valid file,
 >
 >Then the stocks within will be imported into the software.
+
+
 #### Analysis:
 * The implementation of import stocks is contained in the `Admin` class, specifically in the method `addStocks`.
-* Single responsibility: Add stocks from makes use of the `CSVImporter` to
-* Open closed: 
+* Open closed: Add stocks makes use of the `CSVImporter` in the same way add blacklists does.
+
 ### User Story 4:
 #### Story:
 As a Businessman, I want to be able to see a list of stocks that I can view so I know what stocks are available to me.
@@ -108,6 +110,9 @@ As a Businessman, I want to be able to see a list of stocks that I can view so I
 >
 >Then the software will list all stock codes that are available.
 
+#### Analysis:
+* The implementation of list stocks is contained in the `StockNews` class, specifically in the method `showStocks`.
+* Single responsibility: It is responsible only for returning a list of stocks correctly formatted.
 
 #### User Story 5:
 As a Businessman, I want to be able to see a list of labeled news articles related to the chosen stock, labeled according to my blacklists as trustworthy or not so I can make quick investment decisions off of credible data.
@@ -126,3 +131,6 @@ As a Businessman, I want to be able to see a list of labeled news articles relat
 >
 >Then the software will show a list of article links from google that have been marked as trustworthy or not according to any imported blacklists. 
 
+#### Analysis:
+* The implementation of check news stocks is contained in the `StockNews` class, specifically in the method `checkNews`.
+* Single responsibility: While the `checkNews` method does many things, it is actually putting together the many other processes to produce an output. The newsApi adn newsFilter handle their own parts of the work and nothing else.

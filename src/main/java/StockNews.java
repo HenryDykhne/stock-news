@@ -7,15 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 final class StockNews {
-    private User actor;
-    private Admin admin;
+    private Actor actor;
     private Display display;
     private Input input;
     private NewsApi newsApi;
     private Map<String, Stock> stocks;
 
     private StockNews() {
-        actor = new User();
         display = new Display();
         input = new Input();
         newsApi = new NewsApi();
@@ -41,7 +39,9 @@ final class StockNews {
         //I could not figure out how to correctly structure admin so that I could
         //store it and user in one variable and user whichever methods when nescesary.
         if (input.getUserInput().equalsIgnoreCase("y")) {
-            admin = new Admin();
+            actor = new Admin();
+        } else {
+            actor = new User();
         }
     }
 
@@ -116,16 +116,16 @@ final class StockNews {
     }
 
     public String addStocks() {
-        if (admin != null) {
-            try {
-                admin.addStocksFromFile(stocks);
+        try {
+            if (actor.addStocksFromFile(stocks)) {
                 return "Stocks added.";
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "Something went wrong. We could not add your stocks.";
+            } else {
+                return "Not enough permissions";
             }
-        } else {
-            return "Not enough permissions.";
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Something went wrong. We could not add your stocks.";
         }
     }
 
