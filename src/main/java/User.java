@@ -2,7 +2,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class User {
+public class User extends Actor {
 
     private Map<String, Blacklist> blacklists;
 
@@ -29,6 +29,10 @@ public class User {
                    blacklists.get(key).getRestrictedText())).append("\n");
         }
         return text.toString();
+    }
+
+    public Boolean addStocksFromFile(Map<String, Stock> stocks) {
+        return false;
     }
 
 }
