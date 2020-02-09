@@ -23,10 +23,16 @@ stockCode2,searchTerm3,searchTerm4
 
 ## Setup and running instructions:
 1. Open terminal.
-2. Run following commands in terminal to build project: 
+2. Go to the project directory.
+3. Run the following commands in terminal to build the project: 
 ```
-./gradlew build
-./gradlew run --console=plain
+gradle build
+```
+4. Run the following commands in terminal to run the project:
+```
+cd build
+cd libs
+java -jar StockNews-1.0-SNAPSHOT.jar 
 ```
 
 ## User Stories
@@ -48,6 +54,10 @@ As a Businessman, I want to be able to add a file of blacklists so that I can ha
 >When the user selects the valid csv file,
 >
 >Then The blacklists within will be imported into the user.
+#### Analysis:
+* Code for adding a file of blacklists resides in the `Blacklist` class.
+* Single responsibility: It only imports the blacklists. It references the `CSVImporter` class which itself is built with both functions being responsible only for one task. (Importing and parsing)
+* Open closed: The `CSVImporter` class makes use of the open/closed principle because it is an implementation of my `DataImporter`. Thus, the `DataImporter` is closed for modification but open to extension.
 
 ### User Story 2:
 #### Story:
@@ -60,6 +70,10 @@ As a Businessman, I want to be able to see my list of available blacklists and t
 >When I enter the command `show blacklists`,
 >
 >Then program displays a list of available blacklists
+#### Analysis:
+* The implementation of show blacklists resides in the `User` class under the method `blacklistsToString`.
+* Single responsibility: It does only one thing. It constructs and returns a string of the available blacklists.
+* Open closed: 
 
 ### User Story 3:
 #### Story 3:
@@ -78,7 +92,10 @@ As the Administrator, I want to be able to add stocks (with search terms) that c
 >When the user selects that valid file,
 >
 >Then the stocks within will be imported into the software.
-
+#### Analysis:
+* The implementation of import stocks is contained in the `Admin` class, specifically in the method `addStocks`.
+* Single responsibility: Add stocks from makes use of the `CSVImporter` to
+* Open closed: 
 ### User Story 4:
 #### Story:
 As a Businessman, I want to be able to see a list of stocks that I can view so I know what stocks are available to me.

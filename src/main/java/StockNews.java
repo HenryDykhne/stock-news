@@ -57,13 +57,13 @@ final class StockNews {
                     display.showUser(addBlacklist());
                     break;
                 case "show blacklists":
-                    display.showUser(actor.blacklistListToString());
+                    display.showUser(actor.blacklistsToString());
                     break;
                 case "check news":
                     checkNews();
                     break;
                 case "add stocks":
-                    display.showUser(addStock());
+                    display.showUser(addStocks());
                     break;
                 case "show stocks":
                     display.showUser(showStocks());
@@ -115,7 +115,7 @@ final class StockNews {
         }
     }
 
-    public String addStock() {
+    public String addStocks() {
         if (admin != null) {
             try {
                 admin.addStocksFromFile(stocks);

@@ -45,7 +45,6 @@ public class Blacklist {
             }
         }
         return newBlacklists;
-
     }
 
     public boolean isActive() {
