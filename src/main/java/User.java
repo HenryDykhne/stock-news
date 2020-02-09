@@ -22,7 +22,7 @@ public class User {
         this.blacklists.putAll(blacklists);
     }
 
-    public String blacklistListToString() {
+    public String blacklistsToString() {
         StringBuilder text = new StringBuilder();
         for (String key : blacklists.keySet()) {
            text.append(key).append(": ").append(String.join(", ",

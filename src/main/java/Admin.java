@@ -12,4 +12,6 @@ public class Admin extends User {
             stocks.put(row[0], new Stock(row[0], Arrays.asList(Arrays.copyOfRange(row, 1, row.length))));
         }
     }
+
+    ///REFACTOR WITH ACTOR CLASS
 }
