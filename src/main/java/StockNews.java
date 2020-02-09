@@ -90,6 +90,9 @@ final class StockNews {
         display.showUser("Please enter the stock you want to view");
         String name = input.getUserInput();
         try {
+            if(stocks.get(name) == null){
+                throw new Exception();
+            }
             List<String> searchTermsList = stocks.get(name).getNewsKeywords();
             NewsJSON newsJSON = newsApi.mapNewsJSONToPoJo(newsApi.getNewsInfo(searchTermsList));
 

@@ -54,7 +54,7 @@ As a Businessman, I want to be able to add a file of blacklists so that I can ha
 >Then
 
 #### User Story 3:
-As a Businessman, I want to be able to see a list of labeled news articles related to the chosen stock, labeled according to my blacklists as trustworthy or not so I can make quick investment decisions off of credible data.
+As a Businessman, I want to be able to see a list of stocks that I can view so I know what stocks are available to me.
 #### Acceptance Criteria 3:
 >Scenario:
 >
@@ -64,9 +64,21 @@ As a Businessman, I want to be able to see a list of labeled news articles relat
 >
 >Then
 
+
 #### User Story 4:
-As the Administrator, I want to be able to add stocks (with search terms) that can selected by the user so that users can view a greater variety of stocks.
+As a Businessman, I want to be able to see a list of labeled news articles related to the chosen stock, labeled according to my blacklists as trustworthy or not so I can make quick investment decisions off of credible data.
 #### Acceptance Criteria 4:
+>Scenario:
+>
+>Given
+>
+>When
+>
+>Then
+
+#### User Story 5:
+As the Administrator, I want to be able to add stocks (with search terms) that can selected by the user so that users can view a greater variety of stocks.
+#### Acceptance Criteria 5:
 >Scenario:
 >
 >Given
