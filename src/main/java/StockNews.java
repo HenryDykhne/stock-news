@@ -122,14 +122,14 @@ final class StockNews {
                 return "Stocks added.";
             } catch (IOException e) {
                 e.printStackTrace();
-                return"Something went wrong. We could not add your stocks.";
+                return "Something went wrong. We could not add your stocks.";
             }
         } else {
             return "Not enough permissions.";
         }
     }
 
-    public String showStocks(){
+    public String showStocks() {
         StringBuilder text = new StringBuilder();
         for (String key : stocks.keySet()) {
             text.append(key).append("\n");
