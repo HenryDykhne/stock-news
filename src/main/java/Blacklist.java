@@ -1,5 +1,4 @@
 import java.io.File;
-import javax.swing.JFileChooser;
 
 public class Blacklist {
     private String name;
@@ -34,19 +33,12 @@ public class Blacklist {
     }
 
     public static Blacklist importBlackList() throws Exception {
-        File file;
-        final JFileChooser fc = new JFileChooser();
-        // Opening the dialog using null as parent component
-        int returnVal = fc.showOpenDialog(null);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            // Retrieve the selected file
-            file = fc.getSelectedFile();
+        DataImporter importer = new CSVImporter();
+        File file = FileChooser.selectFile();
+        //add line to list of blacklists
+        importer.importData();
+        return new Blacklist(file.getName(), importer.parse().get(0));
 
-            //add line to list of blacklists
-            return new Blacklist(file.getName(), CSVParser.readFullCSV(file).get(0));
-        } else {
-            throw new Exception();
-        }
     }
 
     public boolean isActive() {
