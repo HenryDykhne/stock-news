@@ -22,19 +22,20 @@ final class StockNews {
         stocks = new HashMap<>();
     }
 
-    private String getHelpText() {
+    public String getHelpText() {
         String helpText = "";
         helpText += "Valid Commands:\n";
         helpText += "add blacklists\n";
         helpText += "show blacklists\n";
         helpText += "check news\n";
         helpText += "add stocks (admin privileges required)\n";
+        helpText += "show stocks\n";
         helpText += "help\n";
         helpText += "exit\n";
         return helpText;
     }
 
-    private void setup() {
+    public void setup() {
         display.showUser("StockNews:");
         display.showUser(("Be admin for demonstration (Gives full permissions)? (y/n):"));
         //I could not figure out how to correctly structure admin so that I could
@@ -45,7 +46,7 @@ final class StockNews {
     }
 
     ///this method is only intended to demo the applications capabilities and thus breaks single responsibility.
-    private void run() {
+    public void run() {
         String command = "";
         display.showUser(getHelpText());
 
@@ -53,16 +54,19 @@ final class StockNews {
             command = input.getUserInput();
             switch (command) {
                 case "add blacklists":
-                    addBlacklist();
+                    display.showUser(addBlacklist());
                     break;
                 case "show blacklists":
-                    showBlacklists();
+                    display.showUser(actor.blacklistListToString());
                     break;
                 case "check news":
                     checkNews();
                     break;
                 case "add stocks":
-                    addStock();
+                    display.showUser(addStock());
+                    break;
+                case "show stocks":
+                    display.showUser(showStocks());
                     break;
                 case "help":
                     display.showUser(getHelpText());
@@ -77,21 +81,21 @@ final class StockNews {
         }
     }
 
-    private void addBlacklist() {
+    public String addBlacklist() {
         try {
             actor.addBlacklists(Blacklist.importBlacklists());
-            display.showUser("Success");
+            return "Success";
         } catch (Exception e) {
-            display.showUser("Error. Check your file.");
+            return "Error. Check your file.";
         }
     }
 
-    private void checkNews() {
+    public void checkNews() {
         display.showUser("Please enter the stock you want to view");
         String name = input.getUserInput();
         try {
             if (stocks.get(name) == null) {
-                throw new Exception();
+                throw new Exception("Stock does not exist.");
             }
             List<String> searchTermsList = stocks.get(name).getNewsKeywords();
             NewsJSON newsJSON = newsApi.mapNewsJSONToPoJo(newsApi.getNewsInfo(searchTermsList));
@@ -111,22 +115,26 @@ final class StockNews {
         }
     }
 
-    private void showBlacklists() {
-        display.showUser(actor.blacklistListToString());
-    }
-
-    private void addStock() {
+    public String addStock() {
         if (admin != null) {
             try {
                 admin.addStocksFromFile(stocks);
-                display.showUser("Stocks added.");
+                return "Stocks added.";
             } catch (IOException e) {
                 e.printStackTrace();
-                display.showUser("Something went wrong. We could not add your stocks.");
+                return"Something went wrong. We could not add your stocks.";
             }
         } else {
-            display.showUser("Not enough permissions.");
+            return "Not enough permissions.";
         }
+    }
+
+    public String showStocks(){
+        StringBuilder text = new StringBuilder();
+        for (String key : stocks.keySet()) {
+            text.append(key).append("\n");
+        }
+        return text.toString();
     }
 
     public static void main(String[] args) {
