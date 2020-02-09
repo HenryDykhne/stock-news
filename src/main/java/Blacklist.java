@@ -40,7 +40,7 @@ public class Blacklist {
         importer.importData();
         Map<String, Blacklist> newBlacklists = new HashMap<>();
         for (String[] row: importer.parse()) {
-            if(row != null && row.length >= 2) {
+            if (row != null && row.length >= 2) {
                 newBlacklists.put(row[0], new Blacklist(row[0], Arrays.copyOfRange(row, 1, row.length)));
             }
         }

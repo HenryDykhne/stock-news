@@ -90,7 +90,7 @@ final class StockNews {
         display.showUser("Please enter the stock you want to view");
         String name = input.getUserInput();
         try {
-            if(stocks.get(name) == null){
+            if (stocks.get(name) == null) {
                 throw new Exception();
             }
             List<String> searchTermsList = stocks.get(name).getNewsKeywords();
@@ -99,8 +99,8 @@ final class StockNews {
             //blacklisted articles have a bool value of false
             Map<Article, Boolean> filteredNews = NewsFilter.filterNews(newsJSON, actor.getBlackLists().values());
             display.showUser("Filtered Articles:");
-            for(Article article : filteredNews.keySet()){
-                if(filteredNews.get(article)){
+            for (Article article : filteredNews.keySet()) {
+                if (filteredNews.get(article)) {
                     display.showUser("(Trustworthy)" + article.getUrl());
                 } else {
                     display.showUser("(Untrustworthy)" + article.getUrl());
