@@ -17,7 +17,7 @@ import java.util.List;
 
 public class NewsApi {
     private static final String API_KEY = "603e0c6a34604b9fb43fa35f6148167c";
-    public static final int OK = 200;
+    private static final int OK = 200;
 
     private URL buildURL(List<String> searchTerms) throws URISyntaxException, MalformedURLException {
         String search = StringUtils.join(searchTerms, " OR ");
