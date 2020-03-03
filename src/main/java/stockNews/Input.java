@@ -1,3 +1,5 @@
+package stockNews;
+
 import java.util.Scanner;
 
 public class Input {

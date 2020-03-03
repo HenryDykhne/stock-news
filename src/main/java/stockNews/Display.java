@@ -1,3 +1,5 @@
+package stockNews;
+
 public class Display {
     public Display() {
 

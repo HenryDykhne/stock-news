@@ -1,13 +1,17 @@
+package stockNews.roles;
+
+import stockNews.CSVImporter;
+import stockNews.DataImporter;
+import stockNews.Stock;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Admin extends Actor {
 
     public Admin() {
-        blacklists = new HashMap<>();
+        super();
     }
 
     public Boolean addStocksFromFile(Map<String, Stock> stocks) throws IOException {

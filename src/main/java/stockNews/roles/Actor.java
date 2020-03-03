@@ -1,10 +1,15 @@
+package stockNews.roles;
 
+import stockNews.Blacklist;
+import stockNews.Stock;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User extends Actor {
+public abstract class Actor {
+    private Map<String, Blacklist> blacklists;
 
-    public User() {
+    public Actor() {
         blacklists = new HashMap<>();
     }
 
@@ -23,14 +28,11 @@ public class User extends Actor {
     public String blacklistsToString() {
         StringBuilder text = new StringBuilder();
         for (String key : blacklists.keySet()) {
-           text.append(key).append(": ").append(String.join(", ",
-                   blacklists.get(key).getRestrictedText())).append("\n");
+            text.append(key).append(": ").append(String.join(", ",
+                    blacklists.get(key).getRestrictedText())).append("\n");
         }
         return text.toString();
     }
 
-    public Boolean addStocksFromFile(Map<String, Stock> stocks) {
-        return false;
-    }
-
+    public abstract Boolean addStocksFromFile(Map<String, Stock> stocks) throws IOException;
 }

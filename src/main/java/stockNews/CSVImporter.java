@@ -1,3 +1,5 @@
+package stockNews;
+
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 

@@ -1,19 +1,24 @@
-import news.pojo.Article;
-import news.pojo.NewsJSON;
+package stockNews;
+
+import stockNews.newsPojo.Article;
+import stockNews.newsPojo.NewsJSON;
+import stockNews.roles.Actor;
+import stockNews.roles.Admin;
+import stockNews.roles.User;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-final class StockNews {
+final class App {
     private Actor actor;
     private Display display;
     private Input input;
     private NewsApi newsApi;
     private Map<String, Stock> stocks;
 
-    private StockNews() {
+    private App() {
         display = new Display();
         input = new Input();
         newsApi = new NewsApi();
@@ -60,7 +65,8 @@ final class StockNews {
                     display.showUser(actor.blacklistsToString());
                     break;
                 case "check news":
-                    checkNews();
+                    display.showUser("Please enter the stock you want to view");
+                    checkNews(input.getUserInput());
                     break;
                 case "add stocks":
                     display.showUser(addStocks());
@@ -90,9 +96,7 @@ final class StockNews {
         }
     }
 
-    public void checkNews() {
-        display.showUser("Please enter the stock you want to view");
-        String name = input.getUserInput();
+    public void checkNews(String name) {
         try {
             if (stocks.get(name) == null) {
                 throw new Exception("Stock does not exist.");
@@ -138,9 +142,8 @@ final class StockNews {
     }
 
     public static void main(String[] args) {
-        StockNews app = new StockNews();
+        App app = new App();
         app.setup();
         app.run();
     }
-
 }
