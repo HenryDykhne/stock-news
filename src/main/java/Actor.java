@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.Map;
 
 public abstract class Actor {
-    private Map<String, Blacklist> blacklists;
+    Map<String, Blacklist> blacklists;
 
     Map<String, Blacklist> getBlackLists() {
         return blacklists;

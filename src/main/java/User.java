@@ -4,8 +4,6 @@ import java.util.Map;
 
 public class User extends Actor {
 
-    private Map<String, Blacklist> blacklists;
-
     public User() {
         blacklists = new HashMap<>();
     }
