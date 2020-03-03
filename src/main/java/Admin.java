@@ -1,9 +1,15 @@
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Admin extends Actor {
+
+    public Admin() {
+        blacklists = new HashMap<>();
+    }
+
     public Boolean addStocksFromFile(Map<String, Stock> stocks) throws IOException {
         DataImporter importer = new CSVImporter();
         importer.importData();
