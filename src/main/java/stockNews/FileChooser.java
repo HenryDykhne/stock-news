@@ -1,3 +1,5 @@
+package stockNews;
+
 import javax.swing.JFileChooser;
 import java.io.IOException;
 

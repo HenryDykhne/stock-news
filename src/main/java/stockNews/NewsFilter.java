@@ -1,5 +1,7 @@
-import news.pojo.Article;
-import news.pojo.NewsJSON;
+package stockNews;
+
+import stockNews.newsPojo.Article;
+import stockNews.newsPojo.NewsJSON;
 
 import java.util.Map;
 import java.util.Collection;

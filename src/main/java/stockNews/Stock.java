@@ -1,4 +1,4 @@
-
+package stockNews;
 
 import java.util.List;
 
@@ -28,5 +28,4 @@ public class Stock {
     public void setName(String name) {
         this.name = name;
     }
-
 }
