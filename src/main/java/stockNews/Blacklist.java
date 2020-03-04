@@ -12,7 +12,7 @@ public class Blacklist {
     public Blacklist(String name, String[] list) {
         this.name = name;
         this.restrictedText = list;
-        this.active = true;
+        this.active = false;
     }
 
     public Blacklist(String name, String[] list, Boolean active) {
@@ -55,5 +55,12 @@ public class Blacklist {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return name + ", restrictedText: "
+                + Arrays.toString(restrictedText)
+                + ", active: " + active;
     }
 }
