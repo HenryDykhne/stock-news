@@ -5,7 +5,6 @@ import stockNews.newsPojo.NewsJSON;
 import stockNews.roles.Actor;
 import stockNews.roles.Admin;
 import stockNews.roles.User;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +17,19 @@ final class App {
     private NewsApi newsApi;
     private Map<String, Stock> stocks;
 
-    private App() {
+    App() {
         display = new Display();
         input = new Input();
         newsApi = new NewsApi();
         stocks = new HashMap<>();
+    }
+
+    public Actor getActor() {
+        return actor;
+    }
+
+    public void setActor(Actor actor) {
+        this.actor = actor;
     }
 
     public String getHelpText() {
@@ -30,6 +37,8 @@ final class App {
         helpText += "Valid Commands:\n";
         helpText += "add blacklists\n";
         helpText += "show blacklists\n";
+        helpText += "activate blacklist\n";
+        helpText += "deactivate blacklist\n";
         helpText += "check news\n";
         helpText += "add stocks (admin privileges required)\n";
         helpText += "show stocks\n";
@@ -41,8 +50,6 @@ final class App {
     public void setup() {
         display.showUser("StockNews:");
         display.showUser(("Be admin for demonstration (Gives full permissions)? (y/n):"));
-        //I could not figure out how to correctly structure admin so that I could
-        //store it and user in one variable and user whichever methods when nescesary.
         if (input.getUserInput().equalsIgnoreCase("y")) {
             actor = new Admin();
         } else {
@@ -51,10 +58,10 @@ final class App {
     }
 
     ///this method is only intended to demo the applications capabilities and thus breaks single responsibility.
+    //CHECKSTYLE:OFF
     public void run() {
         String command = "";
         display.showUser(getHelpText());
-
         while (!command.equalsIgnoreCase("exit")) {
             command = input.getUserInput();
             switch (command) {
@@ -64,9 +71,17 @@ final class App {
                 case "show blacklists":
                     display.showUser(actor.blacklistsToString());
                     break;
+                case "activate blacklist":
+                    display.showUser("Enter the name of the blacklist you would like to activate: ");
+                    display.showUser(setBlacklistActivation(input.getUserInput(), true));
+                    break;
+                case "deactivate blacklist":
+                    display.showUser("Enter the name of the blacklist you would like to deactivate: ");
+                    display.showUser(setBlacklistActivation(input.getUserInput(), false));
+                    break;
                 case "check news":
                     display.showUser("Please enter the stock you want to view");
-                    checkNews(input.getUserInput());
+                    display.showUser(checkNews(input.getUserInput()));
                     break;
                 case "add stocks":
                     display.showUser(addStocks());
@@ -86,6 +101,16 @@ final class App {
             }
         }
     }
+    //CHECKSTYLE:ON
+
+    public String setBlacklistActivation(String chosenBlacklist, Boolean activate) {
+        try {
+            actor.getBlackLists().get(chosenBlacklist).setActive(activate);
+            return "Success";
+        } catch (Exception e) {
+            return "Unable to find selected blacklist.";
+        }
+    }
 
     public String addBlacklist() {
         try {
@@ -96,7 +121,7 @@ final class App {
         }
     }
 
-    public void checkNews(String name) {
+    public String checkNews(String name) {
         try {
             if (stocks.get(name) == null) {
                 throw new Exception("Stock does not exist.");
@@ -106,16 +131,18 @@ final class App {
 
             //blacklisted articles have a bool value of false
             Map<Article, Boolean> filteredNews = NewsFilter.filterNews(newsJSON, actor.getBlackLists().values());
-            display.showUser("Filtered Articles:");
+            StringBuilder text = new StringBuilder();
+            text.append("Filtered Articles:\n");
             for (Article article : filteredNews.keySet()) {
                 if (filteredNews.get(article)) {
-                    display.showUser("(Trustworthy)" + article.getUrl());
+                    text.append("(Trustworthy)").append(article.getUrl()).append("\n");
                 } else {
-                    display.showUser("(Untrustworthy)" + article.getUrl());
+                    text.append("(Untrustworthy)").append(article.getUrl()).append("\n");
                 }
             }
+            return text.toString();
         } catch (Exception  e) {
-            display.showUser("Error: " + e);
+            return "Error: " + e;
         }
     }
 

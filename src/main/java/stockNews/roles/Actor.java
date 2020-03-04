@@ -27,9 +27,8 @@ public abstract class Actor {
 
     public String blacklistsToString() {
         StringBuilder text = new StringBuilder();
-        for (String key : blacklists.keySet()) {
-            text.append(key).append(": ").append(String.join(", ",
-                    blacklists.get(key).getRestrictedText())).append("\n");
+        for (Blacklist blacklist : blacklists.values()) {
+            text.append(blacklist.toString()).append("\n");
         }
         return text.toString();
     }
