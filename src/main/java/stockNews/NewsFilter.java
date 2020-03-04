@@ -5,7 +5,6 @@ import stockNews.newsPojo.NewsJSON;
 
 import java.util.Map;
 import java.util.Collection;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -21,7 +20,7 @@ public final class NewsFilter {
         Collection<String> activeMegaList = new HashSet<>();
         for (Blacklist blacklist : blacklists) {
             if (blacklist.isActive()) {
-                activeMegaList.addAll(Arrays.asList(blacklist.getRestrictedText()));
+                activeMegaList.addAll(blacklist.getRestrictedText());
             }
         }
 

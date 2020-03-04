@@ -4,11 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import stockNews.roles.Actor;
 import stockNews.roles.User;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class AppTest {
     App app;
@@ -18,6 +19,7 @@ public class AppTest {
     Boolean returnedBool;
     Boolean expectedBool;
     String blacklistName;
+    String text;
 
     @Before
     public void setUp() {
@@ -38,5 +40,19 @@ public class AppTest {
         expectedBool = activation;
         returnedBool = app.getActor().getBlackLists().get(blacklistName).isActive();
         assertEquals(returnedBool, expectedBool);
+    }
+
+    @Test
+    public void addToBlacklistTest() {
+        text = "food.com";
+        app.addToBlacklist(validBlacklist1.getName(), text);
+        assertTrue(validBlacklist1.getRestrictedText().contains(text));
+    }
+
+    @Test
+    public void removeFromBlacklistTest() {
+        text = validBlacklist1.getRestrictedText().get(0);
+        app.removeFromBlacklist(validBlacklist1.getName(), text);
+        assertFalse(validBlacklist1.getRestrictedText().contains(text));
     }
 }
