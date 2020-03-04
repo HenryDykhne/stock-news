@@ -1,17 +1,19 @@
 package stockNews;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Blacklist {
     private String name;
-    private String[] restrictedText;
+    private List<String> restrictedText;
     private boolean active;
 
     public Blacklist(String name, String[] list) {
         this.name = name;
-        this.restrictedText = list;
+        this.restrictedText = new ArrayList<>(Arrays.asList(list));
         this.active = false;
     }
 
@@ -28,12 +30,12 @@ public class Blacklist {
         this.name = name;
     }
 
-    public String[] getRestrictedText() {
+    public List<String> getRestrictedText() {
         return restrictedText;
     }
 
     public void setRestrictedText(String[] restrictedText) {
-        this.restrictedText = restrictedText;
+        this.restrictedText = new ArrayList<>(Arrays.asList(restrictedText));
     }
 
     public static Map<String, Blacklist> importBlacklists() throws Exception {
@@ -60,7 +62,15 @@ public class Blacklist {
     @Override
     public String toString() {
         return name + ", restrictedText: "
-                + Arrays.toString(restrictedText)
+                + Arrays.toString(restrictedText.toArray())
                 + ", active: " + active;
+    }
+
+    public void addWord(String word) {
+        restrictedText.add(word);
+    }
+
+    public void removeWord(String word) {
+        restrictedText.remove(word);
     }
 }

@@ -39,6 +39,8 @@ final class App {
         helpText += "show blacklists\n";
         helpText += "activate blacklist\n";
         helpText += "deactivate blacklist\n";
+        helpText += "add to blacklist\n";
+        helpText += "remove from blacklist\n";
         helpText += "check news\n";
         helpText += "add stocks (admin privileges required)\n";
         helpText += "show stocks\n";
@@ -61,6 +63,8 @@ final class App {
     //CHECKSTYLE:OFF
     public void run() {
         String command = "";
+        String chosenBlacklist;
+        String word;
         display.showUser(getHelpText());
         while (!command.equalsIgnoreCase("exit")) {
             command = input.getUserInput();
@@ -78,6 +82,20 @@ final class App {
                 case "deactivate blacklist":
                     display.showUser("Enter the name of the blacklist you would like to deactivate: ");
                     display.showUser(setBlacklistActivation(input.getUserInput(), false));
+                    break;
+                case "add to blacklist":
+                    display.showUser("Enter the name of the blacklist you would like to add to: ");
+                    chosenBlacklist = input.getUserInput();
+                    display.showUser("Enter the text to add: ");
+                    word = input.getUserInput();
+                    display.showUser(addToBlacklist(chosenBlacklist,  word));
+                    break;
+                case "remove from blacklist":
+                    display.showUser("Enter the name of the blacklist you would like to remove from: ");
+                    chosenBlacklist = input.getUserInput();
+                    display.showUser("Enter the text to remove: ");
+                    word = input.getUserInput();
+                    display.showUser(removeFromBlacklist(chosenBlacklist,  word));
                     break;
                 case "check news":
                     display.showUser("Please enter the stock you want to view");
@@ -102,6 +120,24 @@ final class App {
         }
     }
     //CHECKSTYLE:ON
+
+    public String addToBlacklist(String chosenBlacklist, String word) {
+        try {
+            actor.getBlackLists().get(chosenBlacklist).addWord(word);
+            return "Success";
+        } catch (Exception e) {
+            return "Chosen blacklist not found.";
+        }
+    }
+
+    public String removeFromBlacklist(String chosenBlacklist, String word) {
+        try {
+            actor.getBlackLists().get(chosenBlacklist).removeWord(word);
+            return "Success";
+        } catch (Exception e) {
+            return "Chosen blacklist not found.";
+        }
+    }
 
     public String setBlacklistActivation(String chosenBlacklist, Boolean activate) {
         try {
