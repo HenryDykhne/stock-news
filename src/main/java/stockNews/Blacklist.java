@@ -11,10 +11,15 @@ public class Blacklist {
     private List<String> restrictedText;
     private boolean active;
 
-    public Blacklist(String name, String[] list) {
+    public Blacklist(String name) {
         this.name = name;
-        this.restrictedText = new ArrayList<>(Arrays.asList(list));
+        this.restrictedText = new ArrayList<>();
         this.active = false;
+    }
+
+    public Blacklist(String name, String[] list) {
+        this(name);
+        this.restrictedText = new ArrayList<>(Arrays.asList(list));
     }
 
     public Blacklist(String name, String[] list, Boolean active) {
