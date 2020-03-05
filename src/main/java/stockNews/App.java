@@ -41,6 +41,7 @@ final class App {
         helpText += "deactivate blacklist\n";
         helpText += "add to blacklist\n";
         helpText += "remove from blacklist\n";
+        helpText += "create blacklist\n";
         helpText += "check news\n";
         helpText += "add stocks (admin privileges required)\n";
         helpText += "show stocks\n";
@@ -97,8 +98,12 @@ final class App {
                     word = input.getUserInput();
                     display.showUser(removeFromBlacklist(chosenBlacklist,  word));
                     break;
+                case "create blacklist":
+                    display.showUser("Enter the name of the new blacklist: ");
+                    display.showUser(createBlacklist(input.getUserInput()));
+                    break;
                 case "check news":
-                    display.showUser("Please enter the stock you want to view");
+                    display.showUser("Enter the stock you want to view");
                     display.showUser(checkNews(input.getUserInput()));
                     break;
                 case "add stocks":
@@ -120,6 +125,11 @@ final class App {
         }
     }
     //CHECKSTYLE:ON
+
+    public String createBlacklist(String name) {
+        actor.addBlacklist(new Blacklist(name));
+        return "Success";
+    }
 
     public String addToBlacklist(String chosenBlacklist, String word) {
         try {

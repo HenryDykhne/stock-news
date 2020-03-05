@@ -55,4 +55,11 @@ public class AppTest {
         app.removeFromBlacklist(validBlacklist1.getName(), text);
         assertFalse(validBlacklist1.getRestrictedText().contains(text));
     }
+
+    @Test
+    public void createBlacklistTest() {
+        text = "newBlacklist";
+        app.createBlacklist(text);
+        assertTrue(app.getActor().getBlackLists().containsKey(text));
+    }
 }

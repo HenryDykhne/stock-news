@@ -25,6 +25,10 @@ public abstract class Actor {
         this.blacklists.putAll(blacklists);
     }
 
+    public void addBlacklist(Blacklist blacklist) {
+        this.blacklists.put(blacklist.getName(), blacklist);
+    }
+
     public String blacklistsToString() {
         StringBuilder text = new StringBuilder();
         for (Blacklist blacklist : blacklists.values()) {
