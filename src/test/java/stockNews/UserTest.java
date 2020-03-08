@@ -11,21 +11,23 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 public class UserTest {
-    Actor validUser;
-    String expectedString;
-    String returnedString;
-    Map<String, Blacklist> blacklistMap;
-    Blacklist validBlacklist1;
-    Blacklist validBlacklist2;
+    private Actor validUser;
+    private String expectedString;
+    private String returnedString;
+    private Map<String, Blacklist> blacklistMap;
+    private Blacklist validBlacklist1;
+    private Blacklist validBlacklist2;
+    private String username;
 
     @Before
     public void setup() {
+        username = "userName";
         validBlacklist1 = new Blacklist("obviousTestBlacklist", new String[] {"breitbart.com", "clickhole.com", "lifehacker.com", "theonion.com"}, false);
         validBlacklist2 = new Blacklist("slightlyDifferentBlacklist", new String[] {"cracked.com", "rt.com"}, false);
         blacklistMap = new HashMap<>();
         blacklistMap.put(validBlacklist1.getName(), validBlacklist1);
         blacklistMap.put(validBlacklist2.getName(), validBlacklist2);
-        validUser = new User();
+        validUser = new User(username);
         validUser.addBlacklists(blacklistMap);
     }
 

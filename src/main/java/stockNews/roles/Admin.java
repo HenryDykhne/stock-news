@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class Admin extends Actor {
 
-    public Admin() {
-        super();
+    public Admin(String name) {
+        super(name);
     }
 
     public Boolean addStocksFromFile(Map<String, Stock> stocks) throws IOException {

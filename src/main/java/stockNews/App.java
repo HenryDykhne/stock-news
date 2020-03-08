@@ -5,7 +5,13 @@ import stockNews.newsPojo.NewsJSON;
 import stockNews.roles.Actor;
 import stockNews.roles.Admin;
 import stockNews.roles.User;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +49,12 @@ final class App {
         helpText += "remove from blacklist\n";
         helpText += "create blacklist\n";
         helpText += "check news\n";
-        helpText += "add stocks (admin privileges required)\n";
+        helpText += "import stocks (admin privileges required)\n";
         helpText += "show stocks\n";
+        helpText += "save stocks\n";
+        helpText += "load stocks\n";
+        helpText += "save profile\n";
+        helpText += "load profile\n";
         helpText += "help\n";
         helpText += "exit\n";
         return helpText;
@@ -52,12 +62,23 @@ final class App {
 
     public void setup() {
         display.showUser("StockNews:");
-        display.showUser(("Be admin for demonstration (Gives full permissions)? (y/n):"));
-        if (input.getUserInput().equalsIgnoreCase("y")) {
-            actor = new Admin();
-        } else {
-            actor = new User();
+        String command;
+        String name;
+
+        while (actor == null) {
+            display.showUser(("Enter as new user, new admin, or load existing profile? (U/A/L): "));
+            command = input.getUserInput();
+            display.showUser("Enter a name:");
+            name = input.getUserInput();
+            if (command.equalsIgnoreCase("A")) {
+                actor = new Admin(name);
+            } else if (command.equalsIgnoreCase("U")) {
+                actor = new User(name);
+            } else {
+                display.showUser(loadActor(name));
+            }
         }
+        display.showUser(loadStocks());
     }
 
     ///this method is only intended to demo the applications capabilities and thus breaks single responsibility.
@@ -106,11 +127,24 @@ final class App {
                     display.showUser("Enter the stock you want to view");
                     display.showUser(checkNews(input.getUserInput()));
                     break;
-                case "add stocks":
-                    display.showUser(addStocks());
+                case "import stocks":
+                    display.showUser(importStocks());
                     break;
                 case "show stocks":
                     display.showUser(showStocks());
+                    break;
+                case "save stocks":
+                    display.showUser(saveStocks());
+                    break;
+                case "load stocks":
+                    display.showUser(loadStocks());
+                    break;
+                case "save profile":
+                    display.showUser(saveProfile());
+                    break;
+                case "load profile":
+                    display.showUser("Enter the name of the profile to be loaded: ");
+                    display.showUser(loadActor(input.getUserInput()));
                     break;
                 case "help":
                     display.showUser(getHelpText());
@@ -125,6 +159,36 @@ final class App {
         }
     }
     //CHECKSTYLE:ON
+
+    private String saveProfile() {
+        try {
+            actor.save();
+            return "Success";
+        } catch (IOException e) {
+            return "Failed to save";
+        }
+    }
+
+    public String loadActor(String name) {
+        try {
+            Object object = Actor.load(name);
+            display.showUser(object.getClass().getName());
+            if (object.getClass().getName().equals("stockNews.roles.Admin")) {
+                actor = (Admin) object;
+            } else if (object.getClass().getName().equals("stockNews.roles.User")) {
+                actor = (User) object;
+            } else {
+                throw new RuntimeException(); //add unable to read actor exception here
+            }
+            return "Success";
+        } catch (IOException e) {
+            return "Load Failed: IO Exception";
+        } catch (ClassNotFoundException e) {
+            return "Load Failed: Class not found.";
+        } catch (RuntimeException e) {
+            return "Load Failed: " + e;
+        }
+    }
 
     public String createBlacklist(String name) {
         actor.addBlacklist(new Blacklist(name));
@@ -192,7 +256,7 @@ final class App {
         }
     }
 
-    public String addStocks() {
+    public String importStocks() {
         try {
             if (actor.addStocksFromFile(stocks)) {
                 return "Stocks added.";
@@ -203,6 +267,37 @@ final class App {
         } catch (IOException e) {
             e.printStackTrace();
             return "Something went wrong. We could not add your stocks.";
+        }
+    }
+
+    public String saveStocks() {
+        try {
+            FileOutputStream fout = new FileOutputStream("stockStorage/stocks");
+            ObjectOutputStream out = new ObjectOutputStream(fout);
+            out.writeObject(stocks);
+            out.flush();
+            out.close();
+            return "Stocks saved";
+        } catch (FileNotFoundException e) {
+            return "Stocks not saved: File not found";
+        } catch (IOException e) {
+            return "Stocks not saved: IO exception";
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public String loadStocks() {
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("stockStorage/stocks"));
+            stocks = (HashMap<String, Stock>) in.readObject();
+            in.close();
+            return "Success: Stocks loaded";
+        } catch (FileNotFoundException e) {
+            return "Stocks not loaded: File not found";
+        } catch (IOException e) {
+            return "Stocks not saved: IO exception";
+        } catch (ClassNotFoundException e) {
+            return "Stocks not saved";
         }
     }
 
