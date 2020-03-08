@@ -2,8 +2,12 @@ package stockNews.roles;
 
 import stockNews.Blacklist;
 import stockNews.Stock;
-
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.Serializable;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,14 +49,12 @@ public abstract class Actor implements Serializable {
         ObjectOutputStream out = new ObjectOutputStream(fout);
         out.writeObject(this);
         out.flush();
-        //closing the stream
         out.close();
     }
 
     public static Object load(String name) throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("actorStorage/" + name + ".actor"));
         Object object = in.readObject();
-        //closing the stream
         in.close();
         return object;
     }

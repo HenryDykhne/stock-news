@@ -1,8 +1,9 @@
 package stockNews;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Stock {
+public class Stock implements Serializable {
     private String name;
     private List<String> newsKeywords;
 

@@ -5,7 +5,13 @@ import stockNews.newsPojo.NewsJSON;
 import stockNews.roles.Actor;
 import stockNews.roles.Admin;
 import stockNews.roles.User;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.ObjectOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,9 +49,11 @@ final class App {
         helpText += "remove from blacklist\n";
         helpText += "create blacklist\n";
         helpText += "check news\n";
-        helpText += "add stocks (admin privileges required)\n";
+        helpText += "import stocks (admin privileges required)\n";
         helpText += "show stocks\n";
-        helpText += "save all\n";
+        helpText += "save stocks\n";
+        helpText += "load stocks\n";
+        helpText += "save profile\n";
         helpText += "load profile\n";
         helpText += "help\n";
         helpText += "exit\n";
@@ -70,6 +78,7 @@ final class App {
                 display.showUser(loadActor(name));
             }
         }
+        display.showUser(loadStocks());
     }
 
     ///this method is only intended to demo the applications capabilities and thus breaks single responsibility.
@@ -118,14 +127,20 @@ final class App {
                     display.showUser("Enter the stock you want to view");
                     display.showUser(checkNews(input.getUserInput()));
                     break;
-                case "add stocks":
-                    display.showUser(addStocks());
+                case "import stocks":
+                    display.showUser(importStocks());
                     break;
                 case "show stocks":
                     display.showUser(showStocks());
                     break;
-                case "save all":
-                    display.showUser(saveAll());
+                case "save stocks":
+                    display.showUser(saveStocks());
+                    break;
+                case "load stocks":
+                    display.showUser(loadStocks());
+                    break;
+                case "save profile":
+                    display.showUser(saveProfile());
                     break;
                 case "load profile":
                     display.showUser("Enter the name of the profile to be loaded: ");
@@ -145,7 +160,7 @@ final class App {
     }
     //CHECKSTYLE:ON
 
-    private String saveAll() {
+    private String saveProfile() {
         try {
             actor.save();
             return "Success";
@@ -241,7 +256,7 @@ final class App {
         }
     }
 
-    public String addStocks() {
+    public String importStocks() {
         try {
             if (actor.addStocksFromFile(stocks)) {
                 return "Stocks added.";
@@ -252,6 +267,36 @@ final class App {
         } catch (IOException e) {
             e.printStackTrace();
             return "Something went wrong. We could not add your stocks.";
+        }
+    }
+
+    public String saveStocks(){
+        try {
+            FileOutputStream fout = new FileOutputStream("stockStorage/stocks");
+            ObjectOutputStream out = new ObjectOutputStream(fout);
+            out.writeObject(stocks);
+            out.flush();
+            out.close();
+            return "Stocks saved";
+        } catch (FileNotFoundException e) {
+            return "Stocks not saved: File not found";
+        } catch (IOException e) {
+            return "Stocks not saved: IO exception";
+        }
+    }
+
+    public String loadStocks(){
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("stockStorage/stocks"));
+            stocks = (HashMap<String, Stock>)in.readObject();
+            in.close();
+            return "Success: Stocks loaded";
+        } catch (FileNotFoundException e) {
+            return "Stocks not loaded: File not found";
+        } catch (IOException e) {
+            return "Stocks not saved: IO exception";
+        } catch (ClassNotFoundException e){
+            return "Stocks not saved";
         }
     }
 
