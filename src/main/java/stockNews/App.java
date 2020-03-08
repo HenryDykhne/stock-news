@@ -45,6 +45,8 @@ final class App {
         helpText += "check news\n";
         helpText += "add stocks (admin privileges required)\n";
         helpText += "show stocks\n";
+        helpText += "save all\n";
+        helpText += "load profile\n";
         helpText += "help\n";
         helpText += "exit\n";
         return helpText;
@@ -52,11 +54,21 @@ final class App {
 
     public void setup() {
         display.showUser("StockNews:");
-        display.showUser(("Be admin for demonstration (Gives full permissions)? (y/n):"));
-        if (input.getUserInput().equalsIgnoreCase("y")) {
-            actor = new Admin();
-        } else {
-            actor = new User();
+        String command;
+        String name;
+
+        while (actor == null){
+            display.showUser(("Enter as new user, new admin, or load existing profile? (U/A/L): "));
+            command = input.getUserInput();
+            display.showUser("Enter a name:");
+            name = input.getUserInput();
+            if (command.equalsIgnoreCase("A")) {
+                actor = new Admin(name);
+            } else if (command.equalsIgnoreCase("U")){
+                actor = new User(name);
+            } else {
+                display.showUser(loadActor(name));
+            }
         }
     }
 
@@ -112,6 +124,13 @@ final class App {
                 case "show stocks":
                     display.showUser(showStocks());
                     break;
+                case "save all":
+                    display.showUser(saveAll());
+                    break;
+                case "load profile":
+                    display.showUser("Enter the name of the profile to be loaded: ");
+                    display.showUser(loadActor(input.getUserInput()));
+                    break;
                 case "help":
                     display.showUser(getHelpText());
                     break;
@@ -125,6 +144,36 @@ final class App {
         }
     }
     //CHECKSTYLE:ON
+
+    private String saveAll() {
+        try {
+            actor.save();
+            return "Success";
+        } catch (IOException e) {
+            return "Failed to save";
+        }
+    }
+
+    public String loadActor(String name){
+        try {
+            Object object = Actor.load(name);
+            display.showUser(object.getClass().getName());
+            if (object.getClass().getName().equals("stockNews.roles.Admin")){
+                actor = (Admin)object;
+            } else if (object.getClass().getName().equals("stockNews.roles.User")) {
+                actor = (User)object;
+            } else {
+                throw new RuntimeException();//add unable to read actor exception here
+            }
+            return "Success";
+        } catch (IOException e) {
+            return "Load Failed: IO Exception";
+        } catch (ClassNotFoundException e) {
+            return "Load Failed: Class not found.";
+        } catch (RuntimeException e) {
+            return "Load Failed: " + e;
+        }
+    }
 
     public String createBlacklist(String name) {
         actor.addBlacklist(new Blacklist(name));

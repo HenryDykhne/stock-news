@@ -2,15 +2,18 @@ package stockNews.roles;
 
 import stockNews.Blacklist;
 import stockNews.Stock;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Actor {
+public abstract class Actor implements Serializable {
+    private String name;
     private Map<String, Blacklist> blacklists;
 
-    public Actor() {
+    public Actor(String name) {
         blacklists = new HashMap<>();
+        this.name = name;
     }
 
     public Map<String, Blacklist> getBlackLists() {
@@ -35,6 +38,23 @@ public abstract class Actor {
             text.append(blacklist.toString()).append("\n");
         }
         return text.toString();
+    }
+
+    public void save() throws IOException {
+        FileOutputStream fout = new FileOutputStream("actorStorage/"+ name +".actor");
+        ObjectOutputStream out = new ObjectOutputStream(fout);
+        out.writeObject(this);
+        out.flush();
+        //closing the stream
+        out.close();
+    }
+
+    public static Object load(String name) throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("actorStorage/" + name + ".actor"));
+        Object object = in.readObject();
+        //closing the stream
+        in.close();
+        return object;
     }
 
     public abstract Boolean addStocksFromFile(Map<String, Stock> stocks) throws IOException;

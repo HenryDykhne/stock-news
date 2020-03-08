@@ -19,6 +19,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.10.0'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.1.2'
     implementation 'org.apache.httpcomponents:httpclient:4.5.10'
+    compile 'org.apache.commons:commons-lang3:3.5'
 }
 
 checkstyle {
