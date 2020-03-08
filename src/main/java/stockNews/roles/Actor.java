@@ -45,7 +45,7 @@ public abstract class Actor implements Serializable {
     }
 
     public void save() throws IOException {
-        FileOutputStream fout = new FileOutputStream("actorStorage/"+ name +".actor");
+        FileOutputStream fout = new FileOutputStream("actorStorage/" + name + ".actor");
         ObjectOutputStream out = new ObjectOutputStream(fout);
         out.writeObject(this);
         out.flush();

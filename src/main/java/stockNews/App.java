@@ -65,14 +65,14 @@ final class App {
         String command;
         String name;
 
-        while (actor == null){
+        while (actor == null) {
             display.showUser(("Enter as new user, new admin, or load existing profile? (U/A/L): "));
             command = input.getUserInput();
             display.showUser("Enter a name:");
             name = input.getUserInput();
             if (command.equalsIgnoreCase("A")) {
                 actor = new Admin(name);
-            } else if (command.equalsIgnoreCase("U")){
+            } else if (command.equalsIgnoreCase("U")) {
                 actor = new User(name);
             } else {
                 display.showUser(loadActor(name));
@@ -169,16 +169,16 @@ final class App {
         }
     }
 
-    public String loadActor(String name){
+    public String loadActor(String name) {
         try {
             Object object = Actor.load(name);
             display.showUser(object.getClass().getName());
-            if (object.getClass().getName().equals("stockNews.roles.Admin")){
-                actor = (Admin)object;
+            if (object.getClass().getName().equals("stockNews.roles.Admin")) {
+                actor = (Admin) object;
             } else if (object.getClass().getName().equals("stockNews.roles.User")) {
-                actor = (User)object;
+                actor = (User) object;
             } else {
-                throw new RuntimeException();//add unable to read actor exception here
+                throw new RuntimeException(); //add unable to read actor exception here
             }
             return "Success";
         } catch (IOException e) {
@@ -270,7 +270,7 @@ final class App {
         }
     }
 
-    public String saveStocks(){
+    public String saveStocks() {
         try {
             FileOutputStream fout = new FileOutputStream("stockStorage/stocks");
             ObjectOutputStream out = new ObjectOutputStream(fout);
@@ -285,17 +285,18 @@ final class App {
         }
     }
 
-    public String loadStocks(){
+    @SuppressWarnings("unchecked")
+    public String loadStocks() {
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream("stockStorage/stocks"));
-            stocks = (HashMap<String, Stock>)in.readObject();
+            stocks = (HashMap<String, Stock>) in.readObject();
             in.close();
             return "Success: Stocks loaded";
         } catch (FileNotFoundException e) {
             return "Stocks not loaded: File not found";
         } catch (IOException e) {
             return "Stocks not saved: IO exception";
-        } catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             return "Stocks not saved";
         }
     }
