@@ -1,9 +1,13 @@
 package stockNews;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import stockNews.roles.Actor;
 import stockNews.roles.User;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,17 +20,21 @@ public class AppTest {
     private Actor validUser;
     private Map<String, Blacklist> blacklistMap;
     private Blacklist validBlacklist1;
+    private Blacklist validBlacklist2;
     private Boolean returnedBool;
     private Boolean expectedBool;
-    private String blacklistName;
+    private String blacklistName1;
+    private String blacklistName2;
     private String userName;
     private String text;
 
     @Before
     public void setUp() {
         userName = "userName";
-        blacklistName = "obviousTestBlacklist";
-        validBlacklist1 = new Blacklist(blacklistName, new String[] {"breitbart.com", "clickhole.com", "lifehacker.com", "theonion.com"}, false);
+        blacklistName1 = "obviousTestBlacklist";
+        blacklistName2 = "newBlacklist";
+        validBlacklist1 = new Blacklist(blacklistName1, new String[] {"breitbart.com", "clickhole.com", "lifehacker.com", "theonion.com"}, false);
+        validBlacklist2 = new Blacklist(blacklistName2, new String[] {"dood.com", "mood.com", "rood.com"}, true);
         blacklistMap = new HashMap<>();
         blacklistMap.put(validBlacklist1.getName(), validBlacklist1);
         validUser = new User(userName);
@@ -38,9 +46,9 @@ public class AppTest {
     @Test
     public void setBlacklistActivationTest() {
         Boolean activation = true;
-        app.setBlacklistActivation(blacklistName, activation);
+        app.setBlacklistActivation(blacklistName1, activation);
         expectedBool = activation;
-        returnedBool = app.getActor().getBlackLists().get(blacklistName).isActive();
+        returnedBool = app.getActor().getBlackLists().get(blacklistName1).isActive();
         assertEquals(returnedBool, expectedBool);
     }
 
@@ -63,5 +71,18 @@ public class AppTest {
         text = "newBlacklist";
         app.createBlacklist(text);
         assertTrue(app.getActor().getBlackLists().containsKey(text));
+    }
+
+    @Test
+    public void saveProfileTest() {
+        app.saveProfile();
+        File file = new File("actorStorage/" + userName + ".actor");
+        assertTrue(file.exists());
+    }
+
+    @After
+    public void tearDown() {
+        File file = new File("actorStorage/" + userName + ".actor");
+        returnedBool = file.delete();
     }
 }

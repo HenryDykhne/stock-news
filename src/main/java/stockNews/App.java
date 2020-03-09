@@ -1,11 +1,15 @@
 package stockNews;
 
-import stockNews.newsPojo.Article;
-import stockNews.newsPojo.NewsJSON;
+import stockNews.ioUtilities.Display;
+import stockNews.ioUtilities.Input;
+import stockNews.news.NewsApi;
+import stockNews.news.NewsFilter;
+import stockNews.news.newsPojo.Article;
+import stockNews.news.newsPojo.NewsJSON;
 import stockNews.roles.Actor;
 import stockNews.roles.Admin;
+import stockNews.roles.InvalidPrivilageException;
 import stockNews.roles.User;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
@@ -75,7 +79,7 @@ final class App {
             } else if (command.equalsIgnoreCase("U")) {
                 actor = new User(name);
             } else {
-                display.showUser(loadActor(name));
+                display.showUser(loadProfile(name));
             }
         }
         display.showUser(loadStocks());
@@ -92,7 +96,7 @@ final class App {
             command = input.getUserInput();
             switch (command) {
                 case "add blacklists":
-                    display.showUser(addBlacklist());
+                    display.showUser(addBlacklists());
                     break;
                 case "show blacklists":
                     display.showUser(actor.blacklistsToString());
@@ -144,7 +148,7 @@ final class App {
                     break;
                 case "load profile":
                     display.showUser("Enter the name of the profile to be loaded: ");
-                    display.showUser(loadActor(input.getUserInput()));
+                    display.showUser(loadProfile(input.getUserInput()));
                     break;
                 case "help":
                     display.showUser(getHelpText());
@@ -160,7 +164,7 @@ final class App {
     }
     //CHECKSTYLE:ON
 
-    private String saveProfile() {
+    public String saveProfile() {
         try {
             actor.save();
             return "Success";
@@ -169,7 +173,7 @@ final class App {
         }
     }
 
-    public String loadActor(String name) {
+    public String loadProfile(String name) {
         try {
             Object object = Actor.load(name);
             display.showUser(object.getClass().getName());
@@ -191,8 +195,12 @@ final class App {
     }
 
     public String createBlacklist(String name) {
-        actor.addBlacklist(new Blacklist(name));
-        return "Success";
+        try {
+            actor.addBlacklist(new Blacklist(name));
+            return "Success";
+        } catch (InvalidBlacklistException e) {
+            return e.getMessage();
+        }
     }
 
     public String addToBlacklist(String chosenBlacklist, String word) {
@@ -222,7 +230,7 @@ final class App {
         }
     }
 
-    public String addBlacklist() {
+    public String addBlacklists() {
         try {
             actor.addBlacklists(Blacklist.importBlacklists());
             return "Success";
@@ -258,12 +266,12 @@ final class App {
 
     public String importStocks() {
         try {
-            if (actor.addStocksFromFile(stocks)) {
-                return "Stocks added.";
-            } else {
-                return "Not enough permissions";
-            }
-
+            DataImporter importer = new CSVImporter();
+            importer.importData();
+            actor.addStocksFromRawData(stocks, importer.parse());
+            return "Stocks added.";
+        } catch (InvalidPrivilageException e) {
+            return e.getMessage();
         } catch (IOException e) {
             e.printStackTrace();
             return "Something went wrong. We could not add your stocks.";

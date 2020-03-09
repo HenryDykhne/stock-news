@@ -9,8 +9,8 @@ public class Stock implements Serializable {
 
 
     public Stock(String name, List<String> newsKeywords) {
-        this.name = name;
-        this.newsKeywords = newsKeywords;
+        setName(name);
+        setNewsKeywords(newsKeywords);
     }
 
 
@@ -18,7 +18,10 @@ public class Stock implements Serializable {
         return newsKeywords;
     }
 
-    public void setNewsKeywords(List<String> newsKeywords) {
+    public void setNewsKeywords(List<String> newsKeywords) throws InvalidStockException {
+        if (newsKeywords.size() == 0) {
+            throw new InvalidStockException("Stocks must have at least one news keyword.");
+        }
         this.newsKeywords = newsKeywords;
     }
 
@@ -26,7 +29,10 @@ public class Stock implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws InvalidStockException {
+        if (name.length() == 0) {
+            throw new InvalidStockException("Stocks must have a non empty name.");
+        }
         this.name = name;
     }
 }

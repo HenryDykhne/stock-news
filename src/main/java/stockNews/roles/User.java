@@ -1,6 +1,7 @@
 package stockNews.roles;
 
 import stockNews.Stock;
+import java.util.List;
 import java.util.Map;
 
 public class User extends Actor {
@@ -9,7 +10,7 @@ public class User extends Actor {
         super(name);
     }
 
-    public Boolean addStocksFromFile(Map<String, Stock> stocks) {
-        return false;
+    public void addStocksFromRawData(Map<String, Stock> stocks, List<String[]> rawStockInfo) {
+        throw new InvalidPrivilageException("User does not have the right to add stocks.");
     }
 }

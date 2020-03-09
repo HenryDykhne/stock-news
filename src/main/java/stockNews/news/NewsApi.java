@@ -1,8 +1,8 @@
-package stockNews;
+package stockNews.news;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import stockNews.newsPojo.NewsJSON;
+import stockNews.news.newsPojo.NewsJSON;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -13,7 +13,7 @@ public class Blacklist implements Serializable {
     private boolean active;
 
     public Blacklist(String name) {
-        this.name = name;
+        setName(name);
         this.restrictedText = new ArrayList<>();
         this.active = false;
     }
@@ -32,7 +32,10 @@ public class Blacklist implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws InvalidBlacklistException {
+        if (name.length() == 0) {
+            throw new InvalidBlacklistException("Blacklists cannot have a blank name");
+        }
         this.name = name;
     }
 

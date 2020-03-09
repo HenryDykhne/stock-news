@@ -1,7 +1,8 @@
-package stockNews;
+package stockNews.news;
 
-import stockNews.newsPojo.Article;
-import stockNews.newsPojo.NewsJSON;
+import stockNews.Blacklist;
+import stockNews.news.newsPojo.Article;
+import stockNews.news.newsPojo.NewsJSON;
 
 import java.util.Map;
 import java.util.Collection;
@@ -24,7 +25,7 @@ public final class NewsFilter {
             }
         }
 
-        //marking all articles that
+        //marking all articles that are trustworthy
         Map<Article, Boolean> filteredArticles = new HashMap<>();
         for (Article article : newsJSON.getArticles()) {
             filteredArticles.put(article, true);

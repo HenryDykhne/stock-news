@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Actor implements Serializable {
@@ -59,5 +60,6 @@ public abstract class Actor implements Serializable {
         return object;
     }
 
-    public abstract Boolean addStocksFromFile(Map<String, Stock> stocks) throws IOException;
+    public abstract void addStocksFromRawData(Map<String, Stock> stocks, List<String[]> rawStockInfo)
+            throws InvalidPrivilageException;
 }

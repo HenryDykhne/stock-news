@@ -1,4 +1,4 @@
-package stockNews;
+package stockNews.ioUtilities;
 
 import javax.swing.JFileChooser;
 import java.io.IOException;
@@ -7,7 +7,6 @@ public final class FileChooser {
 
     private FileChooser() {
         //notToBe instantiated
-
     }
 
     public static java.io.File selectFile() throws IOException {

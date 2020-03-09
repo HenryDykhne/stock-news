@@ -37,7 +37,7 @@ test {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'StockNews'
+                'Main-Class': 'stockNews.App'
         )
     }
     from {
