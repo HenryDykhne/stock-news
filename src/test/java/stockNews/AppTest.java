@@ -72,7 +72,7 @@ public class AppTest {
         app.createBlacklist(text);
         assertTrue(app.getActor().getBlackLists().containsKey(text));
     }
-//These tests rely on a file system and thus do not play nicely with the linter
+
     @Test
     public void saveProfileTest() {
         app.saveProfile();
