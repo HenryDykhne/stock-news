@@ -52,7 +52,7 @@ final class App {
         helpText += "add to blacklist\n";
         helpText += "remove from blacklist\n";
         helpText += "create blacklist\n";
-        helpText += "check stockNews.news\n";
+        helpText += "check news\n";
         helpText += "import stocks (admin privileges required)\n";
         helpText += "show stocks\n";
         helpText += "save stocks\n";
@@ -127,7 +127,7 @@ final class App {
                     display.showUser("Enter the name of the new blacklist: ");
                     display.showUser(createBlacklist(input.getUserInput()));
                     break;
-                case "check stockNews.news":
+                case "check news":
                     display.showUser("Enter the stock you want to view");
                     display.showUser(checkNews(input.getUserInput()));
                     break;

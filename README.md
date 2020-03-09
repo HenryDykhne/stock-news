@@ -32,7 +32,7 @@ gradle build
 ```
 cd build
 cd libs
-java -jar stockNews.App-1.0-SNAPSHOT.jar 
+java -jar StockNews-1.0-SNAPSHOT.jar 
 ```
 ### Changes Made Regarding M1 Marking Suggestions for M2:
 * \# Of acceptance criteria has been increased for new stories where possible.
@@ -365,7 +365,7 @@ As a Businessman, I want to be able to see a list of labeled stockNews.news arti
 >
 >Given I have started the software and imported at least one stock,
 >
->When I type the command `check stockNews.news`,
+>When I type the command `check news`,
 >
 >Then the software will prompt for a stock code.
 >
@@ -376,5 +376,5 @@ As a Businessman, I want to be able to see a list of labeled stockNews.news arti
 >Then the software will show a list of article links from google that have been marked as trustworthy or not according to any imported blacklists. 
 
 #### Analysis:
-* The implementation of check stockNews.news stocks is contained in the `stockNews.App` class, specifically in the method `checkNews`.
+* The implementation of check news stocks is contained in the `stockNews.App` class, specifically in the method `checkNews`.
 * Single responsibility: While the `checkNews` method does many things, it is actually putting together the many other processes to produce an output. The newsApi and newsFilter handle their own parts of the work and nothing else.
