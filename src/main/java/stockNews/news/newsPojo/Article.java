@@ -1,5 +1,5 @@
 
-package stockNews.newsPojo;
+package stockNews.news.newsPojo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,5 +1,5 @@
 
-package stockNews.newsPojo;
+package stockNews.news.newsPojo;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;

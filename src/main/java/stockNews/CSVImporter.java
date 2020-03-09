@@ -2,6 +2,7 @@ package stockNews;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import stockNews.ioUtilities.FileChooser;
 
 import java.io.File;
 import java.io.FileReader;
@@ -24,9 +25,7 @@ public final class CSVImporter implements DataImporter {
     }
 
     public List<String[]> parse() throws IOException {
-
-        FileReader filereader = new FileReader(file);
-
+        FileReader filereader = new FileReader(getFile());
         CSVReader csvReader = new CSVReaderBuilder(filereader).build();
         return csvReader.readAll();
     }
