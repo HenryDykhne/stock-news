@@ -47,6 +47,8 @@ java -jar StockNews-1.0-SNAPSHOT.jar
 ### Interface Segregation:
 * The `DataImporter` interface contains only the functions needed to be implemented to fulfill its purpose. With no waste, it is a good example of interface segregation.
 
+### Test Coverage:
+The test coverage in this project was intended to cover methods, excluding getters, setters and other similar one function bits of code. Main lines were tested on most methods. Alternative error lines that throw exceptions were also tested on the `Actor` hierarchy both the `Stock` and `Blacklist` classes. Classes that had to do with saving and loading do have some tests, but they are commented out because they have difficulty running on the online linting pipeline.
 ## User Stories M2
 
 ## User Story 1:
