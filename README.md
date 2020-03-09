@@ -22,19 +22,36 @@ stockCode2,searchTerm3,searchTerm4
 ```
 
 ## Setup and running instructions:
+### Build
 1. Open terminal.
 2. Go to the project directory.
 3. Run the following commands in terminal to build the project: 
 ```
 gradle build
 ```
-4. Run the following commands in terminal to run the project:
+### Run
+1. Run the following commands in terminal to run the project:
+```
+gradle runApp
+```
+or
 ```
 cd build
 cd libs
 java -jar StockNews-1.0-SNAPSHOT.jar 
 ```
-### Changes Made Regarding M1 Marking Suggestions for M2:
+### Checkstyle
+```
+gradle check
+```
+Results found at `project/build/reports/checkstyle/main.html`
+### Tests
+```
+gradle test
+```
+Results found at `project/build/reports/tests/test/index.html`
+
+## Changes Made Regarding M1 Marking Suggestions for M2:
 * \# Of acceptance criteria has been increased for new stories where possible.
 * setBlacklists, addBlacklists and various other methods already implemented in the abstract `actor` class have been removed from the `Admin` subclass.
 * StockNews class has been renamed to `App` to better reflect its use.
