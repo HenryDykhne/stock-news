@@ -5,9 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import stockNews.roles.Actor;
 import stockNews.roles.User;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 

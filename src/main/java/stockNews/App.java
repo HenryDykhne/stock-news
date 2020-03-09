@@ -232,7 +232,9 @@ final class App {
 
     public String addBlacklists() {
         try {
-            actor.addBlacklists(Blacklist.importBlacklists());
+            DataImporter importer = new CSVImporter();
+            importer.importData();
+            actor.addBlacklists(Blacklist.importBlacklists(importer.parse()));
             return "Success";
         } catch (Exception e) {
             return "Error. Check your file.";

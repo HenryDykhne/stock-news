@@ -47,12 +47,10 @@ public class Blacklist implements Serializable {
         this.restrictedText = new ArrayList<>(Arrays.asList(restrictedText));
     }
 
-    public static Map<String, Blacklist> importBlacklists() throws Exception {
-        DataImporter importer = new CSVImporter();
+    public static Map<String, Blacklist> importBlacklists(List<String[]> importedBlacklists) {
         //add line to list of blacklists
-        importer.importData();
         Map<String, Blacklist> newBlacklists = new HashMap<>();
-        for (String[] row: importer.parse()) {
+        for (String[] row: importedBlacklists) {
             if (row != null && row.length >= 2) {
                 newBlacklists.put(row[0], new Blacklist(row[0], Arrays.copyOfRange(row, 1, row.length)));
             }
