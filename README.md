@@ -3,6 +3,7 @@
 * The `run` method in the `stockNews.App` class is intended only for demonstration for m1 and thus breaks single responsibility.
 * In order to use persistance to store infomation between runs, please use the save/load profile and save/load stock commands.
 * The directory called `testFiles` contains files that can be tested with and provide the template for how to build new data.
+* ci-was designed to work with gitlab. if it has been transfered to github, there is no garuntee that the ci pipeline will work. In fact, it probably wont.
 
 ## Data Structure(Schema included in own document):
 ### Blacklists:
