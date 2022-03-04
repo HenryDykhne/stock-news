@@ -4,7 +4,7 @@
 * In order to use persistance to store infomation between runs, please use the save/load profile and save/load stock commands.
 * The directory called `testFiles` contains files that can be tested with and provide the template for how to build new data.
 * CI-was designed to work with gitlab. if it has been transfered to github, there is no garuntee that the ci pipeline will work. In fact, it probably wont.
-* API key has been removed. you will neeed to get your own.
+* API key has been removed. you will neeed to get your own here: `https://newsapi.org`
 
 ## Data Structure(Schema included in own document):
 ### Blacklists:
