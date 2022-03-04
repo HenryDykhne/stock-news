@@ -18,7 +18,7 @@ import org.apache.http.client.utils.URIBuilder;
 import java.util.List;
 
 public class NewsApi {
-    private static final String API_KEY = "603e0c6a34604b9fb43fa35f6148167c";
+    private static final String API_KEY = /*put your own key here*/;
     private static final int OK = 200;
 
     private URL buildURL(List<String> searchTerms) throws URISyntaxException, MalformedURLException {
